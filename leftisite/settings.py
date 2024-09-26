@@ -124,7 +124,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Session expires after 3 minutes of inactivity
-SESSION_COOKIE_AGE = 180  # 3 minutes in seconds
+#SESSION_COOKIE_AGE = 180  # 3 minutes in seconds
 
 # Make the session expire when the user closes the browser
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+#SESSION_EXPIRE_AT_BROWSER_CLOSE = True
