@@ -47,12 +47,14 @@ The fix for security logging and monitoring failures in the polling app can be a
 
 
 ### Security flaw 5: Cross Site Request Forgery (CSRF)
-[link to flaw 5](https://github.com/leftidev/django-polling-app/blob/3e1ea6e34d2960a81fe934615021a2ed681f553c/leftisite/settings.py#L47)
+[link to flaw 5](https://github.com/leftidev/django-polling-app/blob/5ea057d3abb0e3732039094d80150babb4a8f133/leftisite/settings.py#L47)
 
 Fifth flaw is Cross Site Request Forgery (CSRF). It is not on the OWASP site, because it is rare due to secure web frameworks which handle protection against it. CSRF attack happens when a malicious website contains a form button, link or JavaScript that intends to perform some action on your website. It uses the credentials of a logged-in user visiting the malicious site in their browser. Django has a built-in CSRF protection in Django project settings: (MIDDLEWARE: 'django.middleware.csrf.CsrfViewMiddleware'). When this is enabled the user can implement CSRF protection by using Django's CSRF template tag {% csrf_token %} in a HTML form.
 
 The fix for CSRF vulnerability is by ensuring that GET requests are side effect free, and requests via 'unsafe' methods, such as POST, PUT, and DELETE are protected by the web frameworks built-in CSRF protection [1]. However, if not using a framework with CSRF protection, it has to be implemented manually. This is a complicated process that involves e.g. generating unique CSRF tokens for each user session, including the token as a hidden field in HTML or HTTP header and verifying the token on form submission [2]. In my project, the CsrfViewMiddlware is disabled. For code fix in file "leftisite/settings.py": Uncomment line 47.
 
 References:
+
 [1] https://docs.djangoproject.com/en/5.1/ref/csrf/
+
 [2] https://portswigger.net/web-security/csrf/preventing
