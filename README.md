@@ -4,6 +4,10 @@ The project's goal is to construct software with security flaws, point out the f
 
 ***NOTE: The project uses a local SQlite database, and SHOULD NOT be used in production environment.***
 
+How to run the app: 
+- Run command: python manage.py runserver
+- Open browser: http://127.0.0.1/polls/
+
 # Security flaws and steps to fix them
 
 ### Security flaw 1: Broken Access Control
@@ -18,6 +22,7 @@ The fix for the broken access control flaw is to add authentication via Django's
 
 ### Security flaw 2: Security Misconfiguration
 [link#1 to flaw 2](https://github.com/leftidev/django-polling-app/blob/9e81e9e563528180f56d428a91497a51e4ef1d17/leftisite/urls.py#L6)
+
 [link#2 to flaw 2](https://github.com/leftidev/django-polling-app/blob/9e81e9e563528180f56d428a91497a51e4ef1d17/leftisite/settings.py#L35)
 
 Second flaw is OWASP A05:2021-Security Misconfiguration. The OWASP site for this flaw lists that application might be vulnerable if the application has e.g. unnecessary features that are enabled or installed (e.g., unnecessary ports, services, pages, accounts, or privileges) or default accounts and their passwords are still enabled and unchanged.
@@ -31,6 +36,7 @@ There are two fixes for the security misconfiguration that can be applied. First
 
 ### Security flaw 3: Identification and Authentication Failures
 [link#1 to flaw 3](https://github.com/leftidev/django-polling-app/blob/413712c0ffc8304d8af71134d6706ebca8f67cfc/leftisite/settings.py#L127)
+
 [link#2 to flaw 3](https://github.com/leftidev/django-polling-app/blob/413712c0ffc8304d8af71134d6706ebca8f67cfc/leftisite/settings.py#L130)
 
 Third flaw is OWASP A07:2021-Identification and Authentication Failures. The OWASP site for this flaw describes that "confirmation of the user's identity, authentication, and session management is critical to protect against authentication-related attacks". There may be authentication weaknesses if the application e.g. does not correctly invalidate Session IDs. User sessions or authentication tokens (mainly single sign-on (SSO) tokens) aren't properly invalidated during logout or a period of inactivity. This means that if e.g. a user has used a public computer for an application and simply closes the browser without logging out, an attacker could use the same browser an hour later and the user is still authenticated. My project's admin interface (http://127.0.0.1:8000/admin/) does not correctly invalidate a session cookie after a certain time has passed or the browser has been closed.
