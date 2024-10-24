@@ -128,3 +128,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Make the session expire when the user closes the browser
 #SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+LOGIN_URL = '/polls/login/'  # Redirect to login if not authenticated
+LOGIN_REDIRECT_URL = '/polls/'  # Redirect to index after login
+LOGOUT_REDIRECT_URL = '/polls/'

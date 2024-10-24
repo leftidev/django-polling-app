@@ -6,7 +6,7 @@ The project's goal is to construct software with security flaws, point out the f
 
 How to run the app: 
 - Run command: python manage.py runserver
-- Open browser: http://127.0.0.1/polls/
+- Open browser: http://127.0.0.1:8000/polls/
 
 # Security flaws and steps to fix them
 
@@ -15,9 +15,11 @@ How to run the app:
 
 First flaw is OWASP A01:2021-Broken Access Control. The OWASP site for this flaw describes that "access control enforces policy such that users cannot act outside of their intended permissions". My project has access control vulnerability called an elevation of privileges, which means acting as a user without being logged in or acting as an admin when logged in as a user.
 
-The polling app uses Django's basic authentication backend with Django users database. I have created a superuser admin and user bob. The app has a broken access control flaw in source file "views.py" in function def index(request). The app should only allow logged in users to view the page http://127.0.0.1:8000/polls/. The flaw allows acting as a user without being logged in. 
+The polling app uses Django's basic authentication backend with Django users database. I have created simple authentication system, with superuser admin/admin and user bob/squarepants. The app has a broken access control flaw in source file "views.py". The app should only allow logged in users to access the app. The flaw allows acting as a user without being logged in.
 
-The fix for the broken access control flaw is to add authentication via Django's authentication system, where authenticate() is used to verify a set of credentials. It takes credentials as keyword arguments, username and password, checks them against each authentication backend, and returns a User object if the credentials are valid for a backend. In the project, the valid username is "bob" and valid password is "squarepants". With "user = authenticate()" and the following if-else commented out, there is no authentication at all when viewing the page http://127.0.0.1:8000/polls/. For code fix in file "pollingapp/views.py": Uncomment lines 11, 12, 16 and 17.
+The @login_required decorator in Django is used to restrict access to a particular view or function only to authenticated users. If a user is not logged in and tries to access a view that is decorated with @login_required, they will be redirected to the login page. Once they log in, they are redirected back to the page they originally tried to access.
+
+The fix for the broken access control flaw is to enable @login_required decorators so that views are only accessible by authenticated users. After that, the app can be accessed logging in as user/password "admin"/"admin" or user/password "bob"/"squarepants". With @login_required decorators commented out in the "views.py" functions, the app has no authentication at all and can be accessed without logging in. For code fix in file "pollingapp/views.py": Uncomment lines <TODO>
 
 
 ### Security flaw 2: Security Misconfiguration
