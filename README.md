@@ -12,8 +12,11 @@ How to run the app:
 
 ### Security flaw 1: Broken Access Control
 [link#1 to flaw 1](https://github.com/leftidev/django-polling-app/blob/5634b0e5cc07a20cffa768c78c4ca2c0c762ffbc/pollingapp/views.py#L11)
+
 [link#2 to flaw 1](https://github.com/leftidev/django-polling-app/blob/5634b0e5cc07a20cffa768c78c4ca2c0c762ffbc/pollingapp/views.py#L17)
+
 [link#3 to flaw 1](https://github.com/leftidev/django-polling-app/blob/5634b0e5cc07a20cffa768c78c4ca2c0c762ffbc/pollingapp/views.py#L22)
+
 [link#4 to flaw 1](https://github.com/leftidev/django-polling-app/blob/5634b0e5cc07a20cffa768c78c4ca2c0c762ffbc/pollingapp/views.py#L27)
 
 First flaw is OWASP A01:2021-Broken Access Control. The OWASP site for this flaw describes that "access control enforces policy such that users cannot act outside of their intended permissions". My project has access control vulnerability called an elevation of privileges, which means acting as a user without being logged in or acting as an admin when logged in as a user.
@@ -23,6 +26,7 @@ The polling app uses Django's basic authentication backend with Django users dat
 The @login_required decorator in Django is used to restrict access to a particular view or function only to authenticated users. If a user is not logged in and tries to access a view that is decorated with @login_required, they will be redirected to the login page. Once they log in, they are redirected back to the page they originally tried to access.
 
 The fix for the broken access control flaw is to enable @login_required decorators so that views are only accessible by authenticated users. After that, the app can be accessed logging in as user/password "bob"/"squarepants" or creating a new account. With @login_required decorators commented out in the "views.py" functions, the app has no authentication at all and can be accessed without logging in. For code fix in file "pollingapp/views.py": Uncomment lines 11, 17, 22, 27. **NOTE: Security flaw #5 (CSRF) has to be uncommented aswell - "leftisite/settings.py": Uncomment line 47.**
+
 [link#5 to flaw 1 (CSRF)](https://github.com/leftidev/django-polling-app/blob/5ea057d3abb0e3732039094d80150babb4a8f133/leftisite/settings.py#L47)
 
 
